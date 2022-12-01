@@ -17,7 +17,7 @@ export class StudentsComponent implements OnInit {
   students : Student[] = [];
   filterString : string = '';
 
-  displayedColumns: string[] = ['firstName', 'lastName', 'dateOfBirth', 'email', 'mobile','gender'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'dateOfBirth', 'email', 'mobile','gender','edit'];
   dataSource : MatTableDataSource<Student> = new MatTableDataSource<Student>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sorter!: MatSort;

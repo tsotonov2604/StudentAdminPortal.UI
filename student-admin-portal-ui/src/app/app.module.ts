@@ -51,6 +51,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import { FormsModule } from '@angular/forms';
+import { ViewStudentComponent } from './students/view-student/view-student.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { FormsModule } from '@angular/forms';
     AppComponent,
     TopNavComponent,
     StudentsComponent,
-    HomeComponent
+    HomeComponent,
+    ViewStudentComponent
   ],
   imports: [
     FormsModule,
