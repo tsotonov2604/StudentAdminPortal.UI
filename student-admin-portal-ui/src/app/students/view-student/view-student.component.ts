@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Gender } from 'src/app/models/ui-models/gender.model';
 import { Student } from 'src/app/models/ui-models/student.model';
 import { StudentService } from '../student.service';
@@ -39,7 +39,7 @@ export class ViewStudentComponent implements OnInit {
   studentDOB : Date = new Date();
 
   constructor(private readonly _studentService : StudentService,
-     private readonly route: ActivatedRoute, private _snackBar: MatSnackBar) { }
+     private readonly route: ActivatedRoute, private router: Router,  private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe( (params) => {
@@ -67,6 +67,18 @@ export class ViewStudentComponent implements OnInit {
       this._studentService.updateStudent(this.student.id, this.student).subscribe(
         (success) => {
           this.handleNotification("Student has been updated!", "Success!");
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+
+    deleteStudent() : void {
+      this._studentService.deleteStudent(this.student.id).subscribe(
+        (success) => {
+          this.handleNotification("Student has been deleted!", "Success!");
+          setTimeout(() => {this.router.navigateByUrl('students')}, 3000);
         },
         (error) => {
           console.log(error);

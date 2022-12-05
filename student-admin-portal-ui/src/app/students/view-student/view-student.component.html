@@ -5,6 +5,15 @@
 </div>
 <div class="container m-1">
 
+  <div class="container end-xs m-1">
+    <div class="row">
+      <div class="col-xs-12">
+        <button mat-raised-button color="primary" routerLink="/students">
+          <i class="material-icons" style="margin-right: 5px;">arrow_back</i>Go Back</button>
+      </div>
+    </div>
+  </div>
+
 <div class="row">
   <div class="col-xs-6">
     <form #studentDetailForm="ngForm">
@@ -62,21 +71,12 @@
 </div>
 </div>
 
-
 <div class="container end-xs m-1">
   <div class="row">
     <div class="col-xs-12">
+      <button mat-raised-button color="warn" style="margin-right: 10px" (click)="deleteStudent()">Delete</button>
       <button mat-raised-button color="primary" (click)="onSave()">Save</button>
     </div>
   </div>
 </div>
 
-
-
-<div class="container end-xs m-1">
-  <div class="row">
-    <div class="col-xs-12">
-      <button mat-raised-button color="primary" routerLink="/students">Go Back</button>
-    </div>
-  </div>
-</div>
