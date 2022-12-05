@@ -46,33 +46,33 @@
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <mat-form-field appearance="outline">
-            <mat-label>Gender</mat-label>
-            <input type="text" matInput [(ngModel)]="student.gender.description" name="gender">
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <mat-form-field appearance="outline">
-            <mat-label>Physical Address</mat-label>
-            <input type="text" matInput [(ngModel)]="student.address.physicalAddress" name="physicalAddress">
-          </mat-form-field>
-        </div>
-      </div><div class="row">
-        <div class="col-xs-12">
-          <mat-form-field appearance="outline">
-            <mat-label>Postal Address</mat-label>
-            <input type="text" matInput [(ngModel)]="student.address.postralAddress" name="postalAddress">
-          </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Gender</mat-label>
+              <mat-select [(ngModel)]="currentStudentGender" name="gender">
+                <mat-option value="" selected></mat-option>
+                <mat-option *ngFor="let gender of genders" [value]="gender.description">
+                  {{gender.description}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
         </div>
       </div>
     </form>
   </div>
 </div>
-
-
 </div>
+
+
+<div class="container end-xs m-1">
+  <div class="row">
+    <div class="col-xs-12">
+      <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+    </div>
+  </div>
+</div>
+
+
+
 <div class="container end-xs m-1">
   <div class="row">
     <div class="col-xs-12">

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Gender } from 'src/app/models/ui-models/gender.model';
 import { Student } from 'src/app/models/ui-models/student.model';
 import { StudentService } from '../student.service';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-view-student',
@@ -29,11 +31,15 @@ export class ViewStudentComponent implements OnInit {
       physicalAddress: ''
     }
   };
+
+  genders : Gender[] = [];
+  currentStudentGender : string = ''
+
   studentId : string | null | undefined;
   studentDOB : Date = new Date();
 
   constructor(private readonly _studentService : StudentService,
-     private readonly route: ActivatedRoute) { }
+     private readonly route: ActivatedRoute, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe( (params) => {
@@ -44,11 +50,34 @@ export class ViewStudentComponent implements OnInit {
             this.student = success
             this.studentDOB= new Date (this.student.dateOfBirth);
             this.student.address.postralAddress = this.student.address.postralAddress == undefined ? "" : this.student.address.postralAddress;
+            this.currentStudentGender = this.student.gender.description;
           }
 
-        )}
+        )
+
+      this._studentService.getGenders().subscribe((success) =>
+          this.genders = success
+      )}
+
+
       });
     }
+
+    onSave() : void {
+      this._studentService.updateStudent(this.student.id, this.student).subscribe(
+        (success) => {
+          this.handleNotification("Student has been updated!", "Success!");
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+
+    handleNotification(message: string, action: string) {
+      this._snackBar.open(message, action, {duration: 3000});
+    }
+
   };
 
 
