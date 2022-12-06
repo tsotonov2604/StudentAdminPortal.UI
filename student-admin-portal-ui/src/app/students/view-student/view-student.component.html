@@ -1,6 +1,6 @@
 <div class="page-header">
   <div class="container">
-    <h1>Student Profile</h1>
+    <h1>{{header}}</h1>
   </div>
 </div>
 <div class="container m-1">
@@ -57,9 +57,9 @@
         <div class="col-xs-12">
             <mat-form-field appearance="outline">
               <mat-label>Gender</mat-label>
-              <mat-select [(ngModel)]="currentStudentGender" name="gender">
+              <mat-select [(ngModel)]="student.genderId" name="gender">
                 <mat-option value="" selected></mat-option>
-                <mat-option *ngFor="let gender of genders" [value]="gender.description">
+                <mat-option *ngFor="let gender of genders" [value]="gender.id">
                   {{gender.description}}
                 </mat-option>
               </mat-select>
@@ -73,9 +73,12 @@
 
 <div class="container end-xs m-1">
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-12" *ngIf="!isNewStudent">
       <button mat-raised-button color="warn" style="margin-right: 10px" (click)="deleteStudent()">Delete</button>
       <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+    </div>
+    <div class="col-xs-12" *ngIf="isNewStudent">
+      <button mat-raised-button color="primary" (click)="onAdd()">Add</button>
     </div>
   </div>
 </div>

@@ -11,6 +11,7 @@
         <mat-label>Search students</mat-label>
         <input matInput (keyup)="filterStudents()" [(ngModel)]="filterString">
       </mat-form-field>
+      <button mat-raised-button color="primary" routerLink="/students/add" style="margin-left: 5px;">Add New Student</button>
     </div>
   </div>
   <div class="m-1 mat-elevation-z8">

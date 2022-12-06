@@ -32,6 +32,9 @@ export class ViewStudentComponent implements OnInit {
     }
   };
 
+  isNewStudent: boolean = true;
+  header: string = '';
+
   genders : Gender[] = [];
   currentStudentGender : string = ''
 
@@ -45,15 +48,25 @@ export class ViewStudentComponent implements OnInit {
     this.route.paramMap.subscribe( (params) => {
       this.studentId = params.get('id');
       if(this.studentId){
-        this._studentService.getStudent(this.studentId).subscribe(
-          (success ) => {
-            this.student = success
-            this.studentDOB= new Date (this.student.dateOfBirth);
-            this.student.address.postralAddress = this.student.address.postralAddress == undefined ? "" : this.student.address.postralAddress;
-            this.currentStudentGender = this.student.gender.description;
-          }
 
-        )
+        if(this.studentId.toLowerCase() === 'Add'.toLowerCase()) {
+          this.isNewStudent = true;
+          this.header = 'Add New Student';
+
+        } else{
+          this.isNewStudent = false;
+          this.header = 'Edit Student';
+          this._studentService.getStudent(this.studentId).subscribe(
+            (success ) => {
+              this.student = success
+              this.studentDOB= new Date (this.student.dateOfBirth);
+              this.student.address.postralAddress = this.student.address.postralAddress == undefined ? "" : this.student.address.postralAddress;
+              this.currentStudentGender = this.student.gender.description;
+            }
+          )
+        }
+
+
 
       this._studentService.getGenders().subscribe((success) =>
           this.genders = success
@@ -66,6 +79,7 @@ export class ViewStudentComponent implements OnInit {
     onSave() : void {
       this._studentService.updateStudent(this.student.id, this.student).subscribe(
         (success) => {
+          console.log(this.student);
           this.handleNotification("Student has been updated!", "Success!");
         },
         (error) => {
@@ -90,6 +104,22 @@ export class ViewStudentComponent implements OnInit {
       this._snackBar.open(message, action, {duration: 3000});
     }
 
-  };
+    onAdd() : void {
+      this.student.dateOfBirth = String(this.studentDOB);
+      this.student.genderId = this.genders[0].id;
+      this._studentService.createStudent(this.student).subscribe(
+        (success) => {
+          console.log(this.student);
+          this.handleNotification("Student has been added!", "Success!");
+          setTimeout(() => {this.router.navigateByUrl(`students/${success.id}`)}, 3000);
+        },
+        (error) => {
+          console.log(this.student);
+          console.log(error);
+        }
+      );
+    }
+};
+
 
 
